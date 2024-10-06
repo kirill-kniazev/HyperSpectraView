@@ -95,9 +95,6 @@ class GUI:
         # create a button to open a file
         self.open_button = tk.Button(self.root, text="Open File", command=self.open_file)
         self.open_button.place(x=15, y=15)
-        # create a button to save the movie
-        # self.update_button = tk.Button(self.root, text="Save Movie", command=self.save_movie)
-        # self.update_button.place(x=15, y=45)
         #create a button to save image
         self.save_button = tk.Button(self.root, text="Save Image", command=self.save_image)
         self.save_button.place(x=15, y=45)
@@ -172,22 +169,6 @@ class GUI:
         self.label.place(x=300, y=15)
         self.canvas.draw_idle()
 
-    # def save_movie(self):
-        # fig, ax = plt.subplots()
-        # ax.axis('off')
-        # im = ax.imshow(self.Image_arr[0], cmap=self.cmap)
-
-        # def update_frame(index):
-        #     im.set_array(self.Image_arr[index])
-        #     return im,
-
-        # ani = FuncAnimation(fig, update_frame, frames=range(self.shape[0]), blit=True)
-        # FFwriter = animation.FFMpegWriter(fps=4)
-        # directory_path = os.path.dirname(self.file_path)
-        # movie_path = f"{directory_path}/plot.mp4"
-        # print (f"Movie saved as {movie_path}")
-        # ani.save(movie_path, writer=FFwriter)
-
     def save_image(self):
         directory_path = os.path.dirname(self.file_path)
         np.savetxt(f"{directory_path}/{self.current_wv}(cm⁻¹).txt", self.Image_arr[self.current_image_index])#, fmt='%1.4e')
@@ -202,7 +183,7 @@ class GUI:
 
         #calculate the spectra
         self.signal = np.max(self.Image_arr[:,y:y+width+1,x:x+height+1], axis = (1,2))
-        print (self.signal)
+        # print (self.signal)
         #update the spectra plot
         self.ax2.clear()                                     # clear the current plot
         self.ax2.plot(self.wavenumber_arr, self.signal)      # update the data of the plot
@@ -221,7 +202,7 @@ class GUI:
         spectrum_name = f"spectra_x={self.x_slider.get()}_y={self.y_slider.get()}_width={self.width_slider.get()}_height={self.height_slider.get()}.txt"
         directory_path = os.path.dirname(self.file_path)
         spectra_path = f"{directory_path}/{spectrum_name}"
-        np.savetxt(spectra_path, self.spectra)#, delimiter="\t", fmt='%s')
+        np.savetxt(spectra_path, self.spectra)
         #save the coordinates
         self.coordinates = np.array([self.x_slider.get(), self.y_slider.get(), self.width_slider.get(), self.height_slider.get()])
         print (f"Spectra saved as {spectrum_name}")
